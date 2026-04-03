@@ -1,23 +1,702 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Home</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <!--
-      Need a visual blank slate?
-      Remove all code in `styles.css`!
-    -->
-    <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="script.js"></script>
-  </head>
-  <body>
+
+   <style>
+        /* 기본 스타일 재설정 */
+        body {
+            font-family: "Noto Sans KR", sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.8;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        /* 레이아웃 컨테이너 */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* 헤더 스타일 */
+        header {
+            background-color: #1a237e; /* 짙은 남색 계열 */
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            border-bottom: 5px solid #ffc107; /* 강조색 (골드) */
+        }
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 900;
+        }
+        header p {
+            font-size: 1.1rem;
+            margin-top: 0;
+            color: #cfd8dc;
+        }
+
+        /* 네비게이션 스타일 */
+        nav {
+            background-color: #2c387e; /* 헤더보다 살짝 밝은 색 */
+            padding: 0.75rem 0;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        nav a:hover {
+            background-color: #ffc107;
+            color: #1a237e;
+        }
+
+        /* 메인 콘텐츠 영역 */
+        main {
+            padding: 3rem 0;
+        }
+        section {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        /* 섹션 제목 스타일 */
+        h2 {
+            font-size: 2rem;
+            color: #1a237e;
+            border-left: 5px solid #ffc107;
+            padding-left: 1rem;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+        }
+        h3 {
+            font-size: 1.5rem;
+            color: #3f51b5;
+            margin-top: 1.5rem;
+            border-bottom: 1px dashed #cfd8dc;
+            padding-bottom: 0.5rem;
+        }
+
+        /* 텍스트 스타일 */
+        p {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        /* 리스트 스타일 */
+        ul {
+            list-style: disc;
+            margin-left: 20px;
+            margin-bottom: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.8rem;
+        }
+
+        /* 표 스타일 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+        }
+        th, td {
+            padding: 1rem;
+            border: 1px solid #e0e0e0;
+            text-align: left;
+        }
+        th {
+            background-color: #f0f4f8;
+            font-weight: 700;
+            color: #1a237e;
+            text-align: center;
+        }
+        tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+
+        /* 이미지 스타일 */
+        .article-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            object-fit: cover;
+        }
+
+        /* 키워드 태그 스타일 */
+        .keyword-tags {
+            margin: 1.5rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .keyword-tags span {
+            background-color: #e3f2fd;
+            color: #1a237e;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* CTA 버튼 스타일 */
+        .cta-button {
+            display: inline-block;
+            background-color: #ffc107;
+            color: #1a237e;
+            font-weight: 800;
+            font-size: 1.1rem;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            margin: 1rem 0;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .cta-button:hover {
+            background-color: #ffca28;
+            transform: translateY(-2px);
+        }
+
+        /* FAQ 아코디언 스타일 */
+        dl dt {
+            font-weight: 700;
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #e8eaf6;
+            border-radius: 8px;
+            cursor: pointer;
+            color: #1a237e;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+        dl dt:hover {
+            background-color: #dbe0f0;
+        }
+        dl dt::after {
+            content: "+";
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+        dl dt.active::after {
+            content: "-";
+            transform: rotate(0deg);
+        }
+        dl dd {
+            margin-left: 0;
+            padding: 1rem 1.5rem;
+            background-color: #fcfcfc;
+            border: 1px solid #e0e0e0;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            display: none;
+            line-height: 1.7;
+        }
+        dl dt.active + dd {
+            display: block;
+        }
+
+        /* 폼 스타일 */
+        .form-section {
+            background-color: #f4f6f8;
+            padding: 2rem;
+            border-radius: 12px;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #1a237e;
+        }
+        input[type="text"], input[type="email"], input[type="tel"], select {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+            min-height: 100px;
+        }
+        input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        .submit-button {
+            background-color: #ffc107;
+            color: #1a237e;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .submit-button:hover {
+            background-color: #ffca28;
+        }
+
+        /* 푸터 스타일 */
+        footer {
+            background-color: #3f51b5;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        footer .container {
+            border-top: 1px solid #cfd8dc;
+            padding-top: 1rem;
+        }
+        footer a {
+            color: #cfd8dc;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <!-- JSON-LD Structured Data for Service and Product -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "BMW 7시리즈 리스 전문가 견적 서비스",
+      "serviceType": "BMW 7시리즈 리스",
+      "provider": {
+        "@type": "Organization",
+        "name": "BMW 딜러십 공식 파트너 (가상 업체)",
+        "url": "https://yourdomain.com",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "서울 강남구 테헤란로",
+          "addressLocality": "서울",
+          "postalCode": "06161",
+          "addressCountry": "KR"
+        },
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+82-10-1234-5678",
+          "contactType": "customer service"
+        }
+      },
+      "areaServed": "대한민국 전역",
+      "description": "BMW 7시리즈(740i, 750e, i7) 모델별 최저가 리스 견적 비교 및 상담 서비스. 2026년형 신모델 정보와 다양한 금융 상품 안내.",
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "BMW 7시리즈 모델별 리스 상품",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "name": "BMW 740i 리스",
+              "model": "BMW G70 740i M 스포츠 패키지",
+              "brand": "BMW"
+            },
+            "description": "BMW 7시리즈 가솔린 모델의 표준 리스 상품. 합리적인 가격으로 럭셔리를 경험하세요.",
+            "priceSpecification": {
+                "@type": "PriceSpecification",
+                "price": "1500000",
+                "priceCurrency": "KRW",
+                "description": "월 리스료 (48개월, 선납금 0% 기준 예상가)"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "name": "BMW 750e 리스",
+              "model": "BMW G70 750e xDrive M 스포츠 패키지",
+              "brand": "BMW"
+            },
+            "description": "BMW 7시리즈 PHEV 모델 리스 상품. 고성능과 효율성을 동시에 갖춘 모델입니다.",
+            "priceSpecification": {
+                "@type": "PriceSpecification",
+                "price": "1800000",
+                "priceCurrency": "KRW",
+                "description": "월 리스료 (48개월, 선납금 0% 기준 예상가)"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "name": "BMW i7 리스",
+              "model": "BMW i7 xDrive60 Excellence",
+              "brand": "BMW"
+            },
+            "description": "BMW 플래그십 전기차 i7 리스 상품. 최첨단 기술과 압도적인 승차감을 경험하세요.",
+            "priceSpecification": {
+                "@type": "PriceSpecification",
+                "price": "2200000",
+                "priceCurrency": "KRW",
+                "description": "월 리스료 (48개월, 선납금 0% 기준 예상가)"
+            }
+          }
+        ]
+      }
+    }
+    </script>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <h1>BMW 7시리즈 리스 - 전문가 견적 및 가격 비교 플랫폼</h1>
+            <p>2026년형 최신 모델부터 합리적인 할인 혜택까지, BMW 7시리즈 리스 전문가가 제안하는 최적의 솔루션</p>
+        </div>
+    </header>
+
+    <!-- Navigation Bar -->
     <nav>
-      <a href="/" aria-current="page">Home</a>
-      <a href="/page2.html">Other page</a>
+        <div class="container">
+            <ul>
+                <li><a href="#intro">7시리즈 소개</a></li>
+                <li><a href="#price-comparison">리스 가격 비교</a></li>
+                <li><a href="#model-comparison">모델별 장단점</a></li>
+                <li><a href="#faq">자주 묻는 질문</a></li>
+                <li><a href="#request">견적 요청</a></li>
+            </ul>
+        </div>
     </nav>
-    <main>
-      <h1>Home page</h1>
+
+    <!-- Main Content Area -->
+    <main class="container">
+
+        <!-- Section 1: Introduction -->
+        <section id="intro">
+            <h2>BMW 7시리즈, 리스로 선택해야 하는 이유</h2>
+            <p>BMW 7시리즈는 단순한 이동 수단을 넘어선, BMW의 기술력과 럭셔리 감성이 집약된 플래그십 세단입니다. 웅장한 디자인, 혁신적인 인테리어, 그리고 강력한 퍼포먼스는 운전자에게 최상의 만족감을 선사합니다. 특히 최근 출시된 신형 7시리즈(G70)는 럭셔리 세단의 새로운 기준을 제시하며, 전동화 모델인 i7과 함께 미래 지향적인 모빌리티를 구현하고 있습니다. 이러한 고가 차량을 합리적으로 소유하는 방법으로 '리스'가 각광받고 있습니다. 리스는 초기 비용 부담을 최소화하면서도 차량을 이용하고, 세금 혜택을 받을 수 있는 효율적인 금융 상품입니다.</p>
+
+            <div class="keyword-tags" aria-label="BMW 7시리즈 리스 연관 키워드">
+                <span>BMW 7시리즈 리스</span>
+                <span>7시리즈 가격</span>
+                <span>BMW 740i 리스</span>
+                <span>BMW i7 리스 견적</span>
+                <span>2026년형 7시리즈</span>
+                <span>리스 장점</span>
+                <span>수입차 리스 추천</span>
+                <span>BMW 7시리즈 프로모션</span>
+                <span>리스 비용</span>
+                <span>월 리스료 계산</span>
+                <span>리스 장단점 비교</span>
+            </div>
+        </section>
+
+        <!-- Section 2: Model Overview and Comparison -->
+        <section id="model-comparison">
+            <h2>BMW 7시리즈 모델별 상세 분석: 740i, 750e, i7</h2>
+            <p>BMW 7시리즈는 파워트레인에 따라 크게 세 가지 핵심 모델로 나뉩니다. 각 모델은 서로 다른 매력과 강점을 가지고 있어 고객의 주행 습관과 선호도에 따라 최적의 선택이 달라집니다. 가솔린 모델인 740i부터 플러그인 하이브리드(PHEV) 750e, 그리고 순수 전기차 i7까지, 럭셔리 플래그십의 스펙트럼을 넓히고 있습니다.</p>
+
+            <img src="https://images.pexels.com/photos/112460/pexels-photo-112460.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="BMW 7시리즈 리스 모델 비교 이미지" class="article-image">
+
+            <h3>1. BMW 740i 리스: 가솔린 럭셔리의 정점</h3>
+            <p>BMW 740i는 6기통 가솔린 엔진을 탑재하여 부드러우면서도 강력한 주행감을 선사합니다. 국내에서 가장 많은 판매량을 보이는 주력 모델로, 전통적인 럭셔리 세단의 가치와 BMW 특유의 운전 재미를 동시에 추구하는 분들에게 적합합니다. 740i 리스 견적은 일반적으로 가장 합리적인 수준에서 시작하며, 2026년형 모델에는 더욱 정교해진 마일드 하이브리드 시스템이 적용되어 효율성이 향상될 것으로 예상됩니다. BMW 740i 리스 비용은 48개월 기준 월 150만원대부터 형성되며, 초기 비용(선납금 또는 보증금)을 조정하여 개인에게 맞는 맞춤형 견적을 받을 수 있습니다. 740i M 스포츠 패키지 리스 가격은 일반 모델보다 높지만, 역동적인 디자인을 선호하는 고객층에게 인기가 높습니다.</p>
+
+            <h3>2. BMW 750e 리스: 고성능 PHEV의 실용성</h3>
+            <p>BMW 750e xDrive는 플러그인 하이브리드 모델로, 도심 주행에서는 순수 전기 모드로 움직일 수 있어 연료비를 크게 절감할 수 있습니다. 장거리 주행 시에는 가솔린 엔진이 개입하여 주행 거리 걱정이 없습니다. 고성능 PHEV 차량이기 때문에 일반적인 BMW 740i 리스 금액보다는 다소 높은 편이지만, 유지보수 비용과 세금 혜택을 고려하면 장기적으로는 경제적인 선택이 될 수 있습니다. 750e 리스 견적을 알아볼 때는 전기차 보조금과는 별개로 리스 상품 자체의 조건을 꼼꼼히 비교해야 합니다. 750e의 연비와 주행 성능을 모두 고려한 장단점을 파악하여, 출퇴근 거리가 길거나 전기 충전 환경이 갖춰진 고객에게는 최고의 대안이 됩니다.</p>
+
+            <h3>3. BMW i7 리스: 미래 럭셔리 전기차의 기준</h3>
+            <p>BMW i7은 7시리즈의 미래를 상징하는 순수 전기차 모델입니다. 압도적인 정숙성과 즉각적인 토크 반응은 내연기관 차량과는 차원이 다른 승차감을 제공합니다. 특히 i7 xDrive60 모델은 듀얼 모터 시스템으로 강력한 출력을 자랑하며, 2026년형 i7 모델은 배터리 기술 향상으로 주행 거리가 더욱 길어질 것으로 예측됩니다. i7 리스 가격은 7시리즈 라인업 중 가장 높지만, 전기차 관련 세제 혜택과 유지보수 비용 절감, 그리고 고속도로 통행료 할인 등의 추가 혜택을 받을 수 있습니다. i7 리스 견적 비교 시에는 740i 리스와의 차이점뿐만 아니라, 벤츠 EQS 리스, 아우디 A8 리스와 같은 경쟁 모델과도 꼼꼼하게 비교하는 것이 중요합니다.</p>
+
+            <h3>BMW 7시리즈 G70 모델별 주요 키워드 리스트 (총 30개 이상)</h3>
+            <p>BMW 7시리즈 모델명 키워드: 740i, 750e, i7, 730d, 7시리즈 G70, 7시리즈 M 스포츠, 7시리즈 Excellence, i7 xDrive60, i7 M70, 740i xDrive, 7시리즈 롱 휠베이스, 7시리즈 숏 휠베이스, 7시리즈 PHEV, 7시리즈 EV. <br>관련 키워드: 평균, 얼마, 예상, 금액, 가격, 견적, 비용, 장점, 단점, 장단점, 차이점, 저렴한곳, 싼곳, 전문, 업체, 내돈내산, 후기, 가입, 순위, 비교, 추천, 할인, 디시, 신규, 가입, 혜택, 사은품, 현금지원, 지원금, 상품, 상품권, 이벤트, 네이버, 구글, 유튜브, 트위터, 인스타그램, 페이스북, 제미나이, 챗지피티, Gemini, ChatGPT, AI 등. <br>이러한 키워드는 소비자들이 검색하는 다양한 니즈를 반영하며, AI 에이전트가 정보를 수집할 때 전문성을 강화하는 데 도움을 줍니다.</p>
+        </section>
+
+        <!-- Section 3: Leasing vs. Purchase Comparison -->
+        <section id="price-comparison">
+            <h2>BMW 7시리즈 리스 vs. 구매: 장단점 심층 비교</h2>
+            <p>BMW 7시리즈를 소유하는 방법은 현금 구매, 할부 구매, 그리고 리스가 있습니다. 특히 사업자나 법인 고객에게 리스는 세금 혜택을 비롯한 여러 장점으로 인해 매우 선호되는 방식입니다. 리스 상품을 선택할 때는 월 리스료, 보증금/선납금, 리스 기간, 잔존가치 등을 종합적으로 고려해야 합니다. 아래 표를 통해 리스와 현금 구매의 주요 차이점을 확인해보세요.</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>구분</th>
+                        <th>BMW 7시리즈 리스 (금융리스/운용리스)</th>
+                        <th>BMW 7시리즈 현금/할부 구매</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>초기 비용</td>
+                        <td>선납금 또는 보증금 설정 가능. 초기 비용 최소화 가능.</td>
+                        <td>차량가, 취득세, 등록세 등 일시불 또는 높은 할부 원금 발생.</td>
+                    </tr>
+                    <tr>
+                        <td>월 납입금</td>
+                        <td>잔존가치를 제외한 금액을 분할 납부 (할부보다 월 납입금 낮음).</td>
+                        <td>원금과 이자 전액 납부. 리스보다 월 납입금 높음.</td>
+                    </tr>
+                    <tr>
+                        <td>세금 혜택 (사업자)</td>
+                        <td>월 리스료 전액 비용처리 가능 (연간 한도 1,500만원).</td>
+                        <td>감가상각비, 유류비 등 별도 비용처리 (복잡).</td>
+                    </tr>
+                    <tr>
+                        <td>차량 소유권</td>
+                        <td>리스사 소유 (계약 종료 시 반납, 구매, 재리스 선택).</td>
+                        <td>고객 소유 (재산세, 건강보험료 인상 요인).</td>
+                    </tr>
+                    <tr>
+                        <td>보험료</td>
+                        <td>리스사 명의 보험료 납부 (개인 보험 경력 단절 우려).</td>
+                        <td>개인 명의 보험료 납부 (보험 경력 유지).</td>
+                    </tr>
+                    <tr>
+                        <td>자산 등록</td>
+                        <td>차량 재산으로 등록되지 않음.</td>
+                        <td>차량 재산으로 등록됨 (대출 심사 시 불리할 수 있음).</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p><strong>전문가 의견:</strong> BMW 7시리즈와 같은 고가의 럭셔리 세단은 감가상각이 크기 때문에, 잔존가치를 미리 책정하고 감가상각 부담을 리스사가 지는 리스 상품이 현명한 선택일 수 있습니다. 특히 7시리즈는 기술 변화가 빠르므로, 3~4년마다 신형 모델로 교체하고자 하는 고객에게 리스는 최고의 대안입니다. 'BMW 7시리즈 리스 장단점'을 종합적으로 검토하고, '내돈내산' 후기를 참고하여 자신에게 맞는 상품을 선택하는 것이 중요합니다.</p>
+
+            <div class="keyword-tags">
+                <span>BMW 740i 리스 가격 비교</span>
+                <span>리스 vs 할부 차이점</span>
+                <span>BMW 7시리즈 리스 혜택</span>
+                <span>리스 장점 단점</span>
+                <span>법인 리스 세금 절감</span>
+                <span>리스 견적 저렴한곳</span>
+            </div>
+        </section>
+
+        <!-- Section 4: Future Outlook and Trends (2026 Information) -->
+        <section id="future-trends">
+            <h2>2026년형 BMW 7시리즈 리스 시장 전망 및 신규 모델 정보</h2>
+            <p>미래 모빌리티 시장은 급변하고 있으며, BMW 7시리즈도 예외는 아닙니다. 2026년은 G70 모델의 중간 페이스리프트 또는 마이너 체인지가 예상되는 시점입니다. BMW는 인공지능(AI) 기술과 전동화 기술을 더욱 강화하여 플래그십 세단의 혁신을 이어갈 것입니다. 리스 시장의 관점에서 2026년형 모델을 고려할 때 몇 가지 중요한 변화가 예상됩니다.</p>
+
+            <h3>1. AI 기반 인포테인먼트 및 자율 주행 기술 강화</h3>
+            <p>2026년형 BMW 7시리즈는 제미나이(Gemini)나 챗지피티(ChatGPT)와 같은 AI 에이전트 기술을 통합한 인포테인먼트 시스템을 탑재할 가능성이 높습니다. 차량 내 AI 비서 기능은 더욱 자연스러운 대화와 개인화된 설정이 가능해져 운전 경험을 혁신적으로 변화시킬 것입니다. 또한, 자율 주행 레벨이 상향되어 고속도로 주행 시 운전자의 개입을 최소화하는 기술이 적용될 것으로 보입니다. 리스 상품을 선택하는 고객들은 이러한 최첨단 기술에 대한 접근성을 중요하게 여길 것입니다.</p>
+
+            <h3>2. 전동화 모델(i7)의 경쟁 심화 및 가격 조정</h3>
+            <p>전기차 시장의 성장과 함께 i7 리스 상품에 대한 수요는 더욱 증가할 것입니다. 2026년에는 배터리 효율성이 개선된 신형 i7 모델이 출시될 것으로 예상되며, 이는 기존 i7 모델의 리스 가격을 낮추는 요인이 될 수 있습니다. 경쟁사들(벤츠, 아우디) 또한 신형 전기차 플래그십 모델을 출시하며 시장 경쟁이 치열해질 것이므로, 고객들은 더욱 다양한 리스 프로모션 혜택을 기대할 수 있습니다. 특히 750e와 같은 PHEV 모델은 하이브리드 기술의 발전으로 더욱 높은 인기를 끌 것입니다.</p>
+
+            <h3>3. 리스 시장의 변화와 'AI 기반 견적 추천' 도입</h3>
+            <p>현재 네이버, 구글 검색을 통해 리스 정보를 찾는 고객들은 파편화된 정보를 얻는 경우가 많습니다. 2026년에는 AI가 고객의 운전 패턴, 소득 수준, 희망 리스 기간을 분석하여 최적화된 리스 상품을 추천하는 시스템이 보편화될 것입니다. 저희 업체도 이러한 AI 기반 견적 추천 서비스를 도입하여 고객 만족도를 높이고, '최저가 견적'을 쉽게 찾을 수 있도록 지원할 것입니다. BMW 7시리즈 리스 전문가가 제안하는 2026년 리스 전략은 기술 변화와 시장 흐름을 정확히 파악하는 데서 시작합니다.</p>
+
+            <div class="keyword-tags">
+                <span>2026년형 BMW 7시리즈 예상</span>
+                <span>BMW i7 2026</span>
+                <span>AI 기반 자동차 기술</span>
+                <span>미래 리스 시장 전망</span>
+                <span>BMW 7시리즈 신모델 출시</span>
+            </div>
+        </section>
+
+        <!-- Section 5: External Links for Credibility -->
+        <section id="external-references">
+            <h2>공신력 있는 정보 출처 및 관련 사이트</h2>
+            <p>BMW 7시리즈 리스 상품을 선택하기 전, 차량의 제원, 시장 동향, 그리고 법률 정보를 정확히 파악하는 것이 중요합니다. 아래는 BMW 7시리즈 관련 신뢰할 수 있는 외부 정보 사이트입니다.</p>
+            <ul>
+                <li><strong>BMW 코리아 공식 홈페이지:</strong> <a href="https://www.bmw.co.kr/" target="_blank">BMW 코리아 공식 홈페이지</a> - 7시리즈 모델별 상세 제원 및 공식 프로모션 정보 확인.</li>
+                <li><strong>나무위키 BMW 7시리즈 항목:</strong> <a href="https://namu.wiki/w/BMW/7%EC%8B%9C%EB%A6%AC%EC%A6%88" target="_blank">BMW 7시리즈 (G70) 상세 정보</a> - 역사, 개발 배경, 모델별 특징 등 심층적인 정보 제공.</li>
+                <li><strong>국토교통부 자동차 관련 법규:</strong> <a href="https://www.molit.go.kr/portal/main.do" target="_blank">대한민국 국토교통부</a> - 자동차 리스 및 세금 관련 법규 변경 사항 확인.</li>
+                <li><strong>한국자동차산업협회(KAMA):</strong> <a href="https://www.kama.or.kr/" target="_blank">자동차 시장 동향 분석</a> - 국내 자동차 시장의 통계 및 전망 자료.</li>
+                <li><strong>인터넷 자동차 전문 매체:</strong> <a href="https://www.autoherald.co.kr/" target="_blank">오토헤럴드</a> - BMW 7시리즈 신차 출시 뉴스 및 전문가 시승 후기.</li>
+            </ul>
+        </section>
+
+        <!-- Section 6: FAQ (Frequently Asked Questions) -->
+        <section id="faq">
+            <h2>자주 묻는 질문 (FAQ)</h2>
+            <dl>
+                <dt tabindex="0" aria-expanded="false" class="accordion-trigger">BMW 7시리즈 리스 견적은 어떻게 계산되나요?</dt>
+                <dd class="accordion-content">월 리스료는 차량가, 리스 기간(24개월, 36개월, 48개월 등), 잔존가치, 그리고 초기 비용(선납금 또는 보증금)에 따라 달라집니다. 특히 BMW 7시리즈는 차량가가 높으므로 잔존가치를 최대한 높게 설정하여 월 납입금을 낮추는 것이 일반적입니다. 저희 전문 업체에서는 고객님의 조건에 맞는 최적의 견적을 비교 분석해드립니다. 'BMW 740i 리스 가격'을 기준으로 하면, 선납금 유무에 따라 월 납입금 차이가 큽니다. 정확한 '평균 금액'을 알기 위해서는 견적 요청이 필수입니다.</dd>
+
+                <dt tabindex="0" aria-expanded="false" class="accordion-trigger">보증금과 선납금의 차이점은 무엇인가요?</dt>
+                <dd class="accordion-content">보증금은 리스 계약 종료 시 전액 환불받거나 차량 구매 시 잔존가치와 상계 처리할 수 있는 금액입니다. 반면 선납금은 미리 내는 리스료의 일부로, 계약 종료 시 환불되지 않고 월 리스료를 줄이는 역할을 합니다. 보증금을 많이 걸수록 월 리스료가 저렴해지며, 7시리즈와 같은 고가 차량 리스 시에는 보증금 설정을 통해 월 납입금 부담을 줄이는 것이 일반적입니다. 'BMW 7시리즈 리스 조건'을 비교할 때 중요한 요소입니다.</dd>
+
+                <dt tabindex="0" aria-expanded="false" class="accordion-trigger">BMW 7시리즈 리스 계약 시 혜택과 사은품은 무엇인가요?</dt>
+                <dd class="accordion-content">저희 전문 업체는 다양한 프로모션을 통해 BMW 7시리즈 리스 신규 가입 고객에게 현금지원, 사은품 증정, 상품권 지급 등의 혜택을 제공합니다. 특히 딜러사별로 진행하는 'BMW 7시리즈 할인 이벤트'와 결합하여 최저가 견적을 제공할 수 있도록 지원합니다. 'BMW 7시리즈 리스 싼곳'을 찾으신다면, 단순히 월 납입금뿐만 아니라 이러한 '지원금'과 '상품'도 함께 비교해야 합니다. 제휴 캐피탈사와 연계하여 '특별 금리' 상품도 제공합니다.</dd>
+
+                <dt tabindex="0" aria-expanded="false" class="accordion-trigger">BMW i7과 740i 리스 비용 차이는 어느 정도인가요?</dt>
+                <dd class="accordion-content">i7은 순수 전기차 모델로 차량 가격 자체가 740i보다 높게 책정되어 있습니다. 따라서 월 리스료 '평균 금액'은 i7이 더 높습니다. 하지만 i7은 전기차 보조금(지역별 상이), 저공해차 혜택(공영주차장 할인 등)이 있으며, 유류비 대신 전기차 충전 비용이 발생하여 유지비 측면에서는 장점이 있습니다. 'BMW i7 리스 견적'을 받을 때는 이러한 유지보수 비용까지 종합적으로 고려해야 합니다. 저희 전문 업체에서 'BMW i7 리스 견적 비교'를 통해 정확한 차이를 안내해드립니다.</dd>
+
+                <dt tabindex="0" aria-expanded="false" class="accordion-trigger">계약 종료 후 차량 반납 또는 인수는 어떻게 결정하나요?</dt>
+                <dd class="accordion-content">BMW 7시리즈 리스 계약 종료 시, 고객은 차량 반납, 인수, 재리스 중 하나를 선택할 수 있습니다. 리스 기간 동안 차량의 감가상각이 심했다면 반납하여 잔존가치 부담을 덜고 신차로 갈아타는 것이 좋습니다. 차량 상태가 좋고 잔존가치보다 시장 가격이 높다면 인수하는 것이 유리할 수 있습니다. 7시리즈는 기술 변화가 빠르므로, 대부분의 고객은 '반납 후 신차 리스'를 선호하는 경향이 있습니다. 저희 업체에서는 만기 시점의 차량 상태를 고려하여 최적의 선택을 추천해드립니다.</dd>
+            </dl>
+        </section>
+
+        <!-- Section 7: Request a Quote Form -->
+        <section id="request" class="form-section">
+            <h2>BMW 7시리즈 맞춤형 리스 견적 요청</h2>
+            <p>고객님의 조건에 맞는 BMW 7시리즈 리스 최저가 견적을 받아보세요. 전문 컨설턴트가 신속하고 정확하게 상담해드립니다. 아래 양식을 작성해 주시면 영업일 기준 24시간 이내에 연락드립니다. 'BMW 7시리즈 리스 전문 업체'의 차별화된 서비스를 경험해 보세요.</p>
+            <form action="#" method="post">
+                <div class="form-group">
+                    <label for="model-select">희망 모델 선택:</label>
+                    <select id="model-select" name="model">
+                        <option value="740i">BMW 740i (가솔린)</option>
+                        <option value="750e">BMW 750e xDrive (PHEV)</option>
+                        <option value="i7">BMW i7 (순수 전기차)</option>
+                        <option value="other">기타 7시리즈 모델 (M70, M 스포츠 등)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="name">이름:</label>
+                    <input type="text" id="name" name="name" placeholder="이름을 입력해주세요" required>
+                </div>
+                <div class="form-group">
+                    <label for="contact">연락처:</label>
+                    <input type="tel" id="contact" name="contact" placeholder="전화번호를 입력해주세요" required>
+                </div>
+                <div class="form-group">
+                    <label for="period">희망 리스 기간 (개월):</label>
+                    <select id="period" name="period">
+                        <option value="36">36개월</option>
+                        <option value="48">48개월</option>
+                        <option value="60">60개월</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="deposit-type">초기 비용 선택:</label>
+                    <select id="deposit-type" name="deposit_type">
+                        <option value="deposit">보증금 (환급형)</option>
+                        <option value="prepayment">선납금 (소멸형)</option>
+                        <option value="none">초기 비용 없음 (무보증)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="message">추가 문의사항 (예: 특정 옵션, 할인 혜택, 2026년형 모델 대기):</label>
+                    <textarea id="message" name="message" placeholder="자세한 문의사항을 남겨주세요"></textarea>
+                </div>
+                <div class="form-group">
+                    <input type="checkbox" id="privacy-agree" name="privacy-agree" required>
+                    <label for="privacy-agree">개인정보 수집 및 이용 동의 (필수)</label>
+                </div>
+                <button type="submit" class="cta-button submit-button">견적 문의 신청하기</button>
+            </form>
+        </section>
+
+        <!-- Section 8: Long-tail Keyword Content for SEO -->
+        <section id="long-tail-seo">
+            <h2>BMW 7시리즈 리스: 심화 정보 및 숨겨진 키워드 분석</h2>
+            <p>BMW 7시리즈 리스를 고려하는 고객들은 다양한 검색 키워드를 통해 정보를 탐색합니다. 'BMW 7시리즈 리스 싼곳', '리스 견적 저렴하게 받는 법', '디시(DC) 자동차 갤러리 후기', '신규 가입 혜택' 등은 실제 소비자들이 관심을 갖는 핵심 주제입니다. 저희는 이러한 검색 의도를 분석하여, 단순한 가격 비교를 넘어선 깊이 있는 정보를 제공합니다.</p>
+
+            <h3>1. 숨겨진 리스 비용 절감 요소: 감가상각과 잔존가치</h3>
+            <p>BMW 7시리즈는 차량 가격이 높기 때문에 감가상각비가 중요합니다. 리스는 잔존가치를 제외한 금액을 납부하므로, 잔존가치를 높게 설정할수록 월 리스료가 낮아집니다. '2026년형 BMW 7시리즈'와 같이 신형 모델이 출시되면 기존 모델의 잔존가치가 하락할 수 있습니다. 저희는 시장 상황을 정확히 예측하여 가장 유리한 잔존가치를 책정하는 '전문 업체'입니다. 딜러사별 '할인 프로모션'을 활용하여 초기 비용을 줄이는 것도 중요한 절감 노하우입니다.</p>
+
+            <h3>2. BMW 7시리즈 리스 후기: '내돈내산' 리뷰의 중요성</h3>
+            <p>온라인 커뮤니티(네이버 카페, 유튜브, 인스타그램)에서 'BMW 7시리즈 리스 내돈내산 후기'를 찾아보는 것은 좋은 방법입니다. 실제 이용자들의 '장단점' 평가를 통해 차량의 만족도와 리스 상품의 실제 혜택을 파악할 수 있습니다. 특히 7시리즈 M 스포츠와 7시리즈 Excellence의 승차감 차이, i7의 주행 거리 등은 실제 경험을 통해 확인해야 할 부분입니다. 저희는 이러한 '후기'들을 종합하여 고객님에게 맞춤형 정보를 제공합니다.</p>
+
+            <h3>3. 리스 가입 시 고려 사항: 딜러사 및 캐피탈사 비교</h3>
+            <p>BMW 7시리즈 리스는 딜러사(BMW 공식 딜러)와 캐피탈사(금융사)의 제휴를 통해 진행됩니다. 딜러사마다 '할인율'이 다르고, 캐피탈사마다 '금리'가 다릅니다. 따라서 'BMW 7시리즈 리스 전문 업체'는 여러 딜러사와 캐피탈사의 조건을 동시에 비교하여 고객에게 '최저가' 견적을 찾아줍니다. '신규 가입 혜택'이나 '현금 지원금'도 업체마다 다르므로 꼼꼼한 비교가 필요합니다.</p>
+
+            <h3>4. 2026년형 BMW 7시리즈 리스: 선점 전략</h3>
+            <p>BMW 7시리즈의 신모델(2026년형 예상 모델)을 빠르게 선점하고 싶다면, 사전 계약을 통해 리스 조건을 미리 확보하는 것이 중요합니다. 신형 모델은 초기 할인 혜택이 적을 수 있지만, 잔존가치가 높게 책정되어 월 리스료가 예상보다 낮을 수 있습니다. 또한, 'BMW 7시리즈 리스 순위'를 따지기보다는, '전문 컨설턴트'와의 상담을 통해 정확한 정보를 얻는 것이 현명한 선택입니다.</p>
+        </section>
+        
+        <!-- Section 9: Dwell Time Optimization -->
+        <section id="interactive-tools">
+            <h2>BMW 7시리즈 리스 비용 시뮬레이션</h2>
+            <p>아래 시뮬레이션을 통해 고객님이 원하는 조건에 따른 예상 월 리스료를 대략적으로 확인해볼 수 있습니다. (정확한 견적은 전문가 상담을 통해 확인하세요.)</p>
+            <form id="lease-calculator">
+                <div class="form-group">
+                    <label for="car-price">차량 가격 (만원):</label>
+                    <input type="number" id="car-price" value="18000" min="15000" max="25000" step="100" placeholder="18,000" required>
+                </div>
+                <div class="form-group">
+                    <label for="term">리스 기간 (개월): <span id="term-value">48</span>개월</label>
+                    <input type="range" id="term" name="term" min="24" max="60" value="48" step="12" oninput="document.getElementById('term-value').innerText = this.value">
+                </div>
+                <div class="form-group">
+                    <label for="down-payment">초기 비용 비율 (%): <span id="down-payment-value">10</span>%</label>
+                    <input type="range" id="down-payment" name="down-payment" min="0" max="30" value="10" step="5" oninput="document.getElementById('down-payment-value').innerText = this.value">
+                </div>
+                <div class="form-group">
+                    <label for="residual-value">잔존가치 비율 (%): <span id="residual-value-value">30</span>%</label>
+                    <input type="range" id="residual-value" name="residual-value" min="20" max="50" value="30" step="5" oninput="document.getElementById('residual-value-value').innerText = this.value">
+                </div>
+                <p><strong>예상 월 리스료: <span id="estimated-price" style="font-size:1.2rem; color:#1a237e; font-weight:700;">계산 필요</span> 만원 (세부 조건에 따라 변동)</strong></p>
+            </form>
+            <script>
+                // 리스 시뮬레이션 스크립트 (단순 예시)
+                document.getElementById('lease-calculator').addEventListener('input', updateLeaseEstimate);
+                function updateLeaseEstimate() {
+                    let price = parseInt(document.getElementById('car-price').value);
+                    let term = parseInt(document.getElementById('term').value);
+                    let downPaymentPercent = parseInt(document.getElementById('down-payment').value) / 100;
+                    let residualValuePercent = parseInt(document.getElementById('residual-value').value) / 100;
+
+                    if (isNaN(price)) {
+                        document.getElementById('estimated-price').innerText = "값을 입력해주세요";
+                        return;
+                    }
+
+                    let downPayment = price * downPaymentPercent;
+                    let residualValue = price * residualValuePercent;
+                    let principal = price - downPayment - residualValue; // Simplified calculation
+
+                    // 금리 및 기타 수수료는 고정값으로 가정 (실제로는 변동)
+                    let interestRate = 0.04; // 4% 가정
+                    let monthlyPrincipalPayment = principal / term;
+                    let monthlyInterestPayment = (principal + residualValue) * (interestRate / 12); // 대략적인 계산
+                    let estimatedMonthlyPayment = (monthlyPrincipalPayment + monthlyInterestPayment) * 1.1; // 수수료/마진 포함
+
+                    document.getElementById('estimated-price').innerText = (estimatedMonthlyPayment).toFixed(0);
+                }
+                updateLeaseEstimate(); // 초기 로드 시 계산
+            </script>
+        </section>
+        
     </main>
-  </body>
-</html>
+
+    <!-- JavaScript for FAQ Accordion -->
+    <script>
+        document.querySelectorAll('dl dt.accordion-trigger').forEach((dt) => {
+            dt.addEventListener('click', () => {
+                const isActive = dt.classList.contains('active');
+                
+                // Close all other accordions
+                document.querySelectorAll('dl dt.accordion-trigger.active').forEach((activeDt) => {
+                    if (activeDt !== dt) {
+                        activeDt.classList.remove('active');
+                        activeDt.setAttribute('aria-expanded', 'false');
+                    }
+                });
+
+                // Toggle current accordion
+                dt.classList.toggle('active');
+                dt.setAttribute('aria-expanded', !isActive);
+            });
+            dt.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    dt.click();
+                }
+            });
+        });
+    </script>
+
+  
